@@ -88,6 +88,8 @@ const PLAN_COMPTABLE_STANDARD = [
   { num_compte: '786000', libelle: 'Reprises sur provisions pour dépréciation', type_compte: 'Produit' },
 ];
 
+export const dynamic = 'force-dynamic';
+
 export async function POST() {
   try {
     const session = await getServerSession(authOptions);

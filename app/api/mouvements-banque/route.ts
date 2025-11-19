@@ -23,6 +23,8 @@ function JsonResponse(data: any, status: number = 200) {
 }
 
 // POST - Créer un mouvement bancaire
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);

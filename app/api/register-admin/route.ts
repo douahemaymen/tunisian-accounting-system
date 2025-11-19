@@ -5,6 +5,8 @@ import { prisma } from '@/lib/prisma'; // Assurez-vous que le chemin est correct
 import bcrypt from 'bcryptjs';
 
 // Gère les requêtes POST vers /api/register-admin
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();

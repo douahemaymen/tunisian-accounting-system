@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { authService } from '@/lib/services/auth.service';
 import { prisma } from '@/lib/prisma';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const comptable = await authService.getComptable();

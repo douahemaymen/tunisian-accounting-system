@@ -11,6 +11,8 @@ interface ImportCompte {
 }
 
 // POST - Importer des comptes depuis JSON ou Excel
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);

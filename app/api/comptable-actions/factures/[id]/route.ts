@@ -23,6 +23,8 @@ function JsonResponse(data: any, status: number = 200) {
 }
 
 // PUT - Modifier une facture
+export const dynamic = 'force-dynamic';
+
 export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }

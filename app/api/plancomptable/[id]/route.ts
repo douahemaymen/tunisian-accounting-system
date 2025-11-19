@@ -4,6 +4,8 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
 // PUT - Modifier un compte
+export const dynamic = 'force-dynamic';
+
 export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }

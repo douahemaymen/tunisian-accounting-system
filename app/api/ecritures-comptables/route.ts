@@ -4,6 +4,8 @@ import { authService } from '@/lib/services/auth.service';
 import { ecritureService } from '@/lib/services/ecriture.service';
 import { jsonResponse, errorResponse } from '@/lib/utils/response';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const comptable = await authService.getComptable();

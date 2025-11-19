@@ -23,6 +23,8 @@ function JsonResponse(data: any, status: number = 200) {
 }
 
 // DELETE - Supprimer un journal banque
+export const dynamic = 'force-dynamic';
+
 export async function DELETE(
   _request: NextRequest,
   { params }: { params: { id: string } }

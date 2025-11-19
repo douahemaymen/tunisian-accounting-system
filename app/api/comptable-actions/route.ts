@@ -5,6 +5,8 @@ import bcrypt from 'bcryptjs';
 /* ============================================================
    GET : LISTER TOUS LES COMPTABLES AVEC LEURS CLIENTS
    ============================================================ */
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const comptables = await prisma.comptable.findMany({

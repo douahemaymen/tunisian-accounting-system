@@ -21,6 +21,8 @@ function JsonResponse(data: any, status: number = 200) {
   });
 }
 
+export const dynamic = 'force-dynamic';
+
 export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string } }

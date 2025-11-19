@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import * as XLSX from 'xlsx';
 
 // GET - Télécharger un template Excel pour l'import
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     // Données d'exemple pour le template

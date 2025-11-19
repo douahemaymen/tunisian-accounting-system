@@ -5,6 +5,8 @@ import { authOptions } from '@/lib/auth';
 import * as XLSX from 'xlsx';
 
 // GET - Exporter le plan comptable en Excel ou JSON
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);

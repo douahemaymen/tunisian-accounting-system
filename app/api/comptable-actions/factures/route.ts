@@ -24,6 +24,8 @@ function JsonResponse(data: any, status: number = 200) {
 }
 
 // GET - Récupérer toutes les factures des clients du comptable
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const session = await getServerSession(authOptions);

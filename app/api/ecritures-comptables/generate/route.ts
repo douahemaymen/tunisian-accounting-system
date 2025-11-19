@@ -11,6 +11,8 @@ interface EcritureData {
 }
 
 // POST - Générer automatiquement les écritures comptables pour une facture avec Gemini
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
