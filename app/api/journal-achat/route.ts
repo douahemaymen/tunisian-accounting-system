@@ -5,6 +5,7 @@ import { journalValidator } from '@/lib/validators/journal.validator';
 import { jsonResponse, errorResponse, successResponse } from '@/lib/utils/response';
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function POST(req: NextRequest) {
   try {

@@ -5,6 +5,7 @@ import { authOptions } from '@/lib/auth';
 
 // PUT - Modifier une écriture comptable
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function PUT(
   request: NextRequest,

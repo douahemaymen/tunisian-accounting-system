@@ -3,6 +3,7 @@ import * as XLSX from 'xlsx';
 
 // GET - Télécharger un template Excel pour l'import
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function GET() {
   try {

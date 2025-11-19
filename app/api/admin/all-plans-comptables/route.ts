@@ -4,6 +4,7 @@ import { authOptions } from '@/lib/auth';
 import { getAllPlansComptables, getPlansComptablesStats } from '@/lib/plan-comptable';
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function GET(request: NextRequest) {
   try {

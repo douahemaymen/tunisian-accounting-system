@@ -6,6 +6,7 @@ import { parseDate } from '@/lib/date-utils';
 
 // POST - Créer une nouvelle écriture comptable
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function POST(request: NextRequest) {
   try {

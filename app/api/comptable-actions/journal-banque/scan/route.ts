@@ -6,6 +6,7 @@ import { uploadImageToCloudinary } from '@/lib/cloudinary';
 import { extractJournalBanqueData } from '@/lib/gemini';
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function POST(request: NextRequest) {
   try {

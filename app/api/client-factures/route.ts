@@ -24,6 +24,7 @@ function JsonResponse(data: any, status: number = 200) {
 
 // POST - Créer une facture avec écritures pour un client
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function POST(request: NextRequest) {
   try {

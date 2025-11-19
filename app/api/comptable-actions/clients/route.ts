@@ -5,6 +5,7 @@ import { authOptions } from '@/lib/auth';
 
 // GET - Récupérer tous les clients du comptable
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function GET() {
   try {

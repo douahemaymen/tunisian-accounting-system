@@ -24,6 +24,7 @@ function JsonResponse(data: any, status: number = 200) {
 
 // DELETE - Supprimer un journal vente
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function DELETE(
   _request: NextRequest,

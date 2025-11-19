@@ -5,6 +5,7 @@ import { ecritureService } from '@/lib/services/ecriture.service';
 import { jsonResponse, errorResponse } from '@/lib/utils/response';
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function GET(request: NextRequest) {
   try {

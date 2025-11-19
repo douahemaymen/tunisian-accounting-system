@@ -6,6 +6,7 @@ import bcrypt from 'bcryptjs';
    GET : LISTER TOUS LES COMPTABLES AVEC LEURS CLIENTS
    ============================================================ */
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function GET() {
   try {

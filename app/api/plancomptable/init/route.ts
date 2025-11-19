@@ -89,6 +89,7 @@ const PLAN_COMPTABLE_STANDARD = [
 ];
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function POST() {
   try {

@@ -4,6 +4,7 @@ import { authOptions } from '@/lib/auth';
 import { genererEcrituresDepuisImage, testerGenerationEcritures } from '@/lib/ecriture-rapide-tunisie';
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function POST(request: NextRequest) {
   try {

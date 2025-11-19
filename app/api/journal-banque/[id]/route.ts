@@ -22,6 +22,7 @@ function JsonResponse(data: any, status: number = 200) {
 }
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function PUT(
   req: NextRequest,

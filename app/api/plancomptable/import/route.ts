@@ -12,6 +12,7 @@ interface ImportCompte {
 
 // POST - Importer des comptes depuis JSON ou Excel
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function POST(request: NextRequest) {
   try {

@@ -5,6 +5,7 @@ import { prisma } from '@/lib/prisma';
 import { generateEcrituresComptables } from '@/lib/ecriture-comptable-engine';
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function POST(request: NextRequest) {
   try {
