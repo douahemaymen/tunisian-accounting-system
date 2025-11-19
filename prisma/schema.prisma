@@ -1,0 +1,170 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Comptable {
+  id            String          @id @default(cuid())
+  userId        String          @unique
+  nom           String
+  societe       String
+  createdAt     DateTime        @default(now())
+  clients       Client[]
+  user          User            @relation(fields: [userId], references: [id])
+  planComptable PlanComptable[]
+}
+
+model Client {
+  uid              String          @id
+  email            String?
+  nom              String
+  societe          String
+  date_inscription BigInt?
+  statut           String?
+  comptableId      String?
+  userId           String?         @unique
+  comptable        Comptable?      @relation(fields: [comptableId], references: [id])
+  user             User?           @relation(fields: [userId], references: [id])
+  journauxAchat    JournalAchat[]
+  journauxBanque   JournalBanque[]
+  journauxVente    JournalVente[]
+}
+
+model JournalAchat {
+  id                 String              @id @default(cuid())
+  clientUid          String
+  type_facture       String
+  fournisseur        String
+  date               String
+  reference          String
+  total_ht           Float
+  tva_19             Float               @default(0)
+  tva_13             Float               @default(0)
+  tva_7              Float               @default(0)
+  total_tva          Float               @default(0)
+  total_ttc          Float               @default(0)
+  remise             Float               @default(0)
+  timbre_fiscal      Float               @default(0)
+  image_url          String
+  created_at         BigInt
+  accounting_entries Json?
+  status             String              @default("PENDING")
+  ecritures          EcritureComptable[]
+  client             Client              @relation(fields: [clientUid], references: [uid], onDelete: Cascade)
+}
+
+model JournalVente {
+  id                 String              @id @default(cuid())
+  clientUid          String
+  type_facture       String
+  clientdefacture    String
+  date               String
+  reference          String
+  total_ht           Float
+  tva_19             Float               @default(0)
+  tva_13             Float               @default(0)
+  tva_7              Float               @default(0)
+  total_tva          Float               @default(0)
+  total_ttc          Float               @default(0)
+  remise             Float               @default(0)
+  timbre_fiscal      Float               @default(0)
+  image_url          String
+  created_at         BigInt
+  accounting_entries Json?
+  status             String              @default("PENDING")
+  ecritures          EcritureComptable[]
+  client             Client              @relation(fields: [clientUid], references: [uid], onDelete: Cascade)
+}
+
+model JournalBanque {
+  id            String              @id @default(cuid())
+  clientUid     String
+  date          String
+  numero_compte String
+  titulaire     String
+  image_url     String?
+  created_at    BigInt              @default(0)
+  status        String              @default("PENDING")
+  mouvements    MouvementJournal[]
+  ecritures     EcritureComptable[]
+  client        Client              @relation(fields: [clientUid], references: [uid], onDelete: Cascade)
+}
+
+model MouvementJournal {
+  id              String        @id @default(cuid())
+  journalBanqueId String
+  date            String
+  libelle         String
+  debit           Float         @default(0)
+  credit          Float         @default(0)
+  journalBanque   JournalBanque @relation(fields: [journalBanqueId], references: [id], onDelete: Cascade)
+}
+
+model PlanComptable {
+  id          String              @id @default(cuid())
+  comptableId String
+  num_compte  String
+  libelle     String
+  type_compte String?
+  ecritures   EcritureComptable[]
+  comptable   Comptable           @relation(fields: [comptableId], references: [id], onDelete: Cascade)
+}
+
+model EcritureComptable {
+  id              String         @id @default(cuid())
+  factureId       String?
+  planId          String
+  date            DateTime       @default(now())
+  debit           Float          @default(0)
+  credit          Float          @default(0)
+  libelle         String
+  num_compte      String
+  factureVenteId  String?
+  journalBanqueId String?
+  facture         JournalAchat?  @relation(fields: [factureId], references: [id], onDelete: Cascade)
+  factureVente    JournalVente?  @relation(fields: [factureVenteId], references: [id], onDelete: Cascade)
+  journalBanque   JournalBanque? @relation(fields: [journalBanqueId], references: [id], onDelete: Cascade)
+  planComptable   PlanComptable  @relation(fields: [planId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String     @id @default(cuid())
+  email         String     @unique
+  password_hash String
+  role          String
+  createdAt     DateTime   @default(now())
+  accounts      Account[]
+  clientInfo    Client?
+  comptableInfo Comptable?
+  sessions      Session[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  expires      DateTime
+  sessionToken String   @unique
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
