@@ -350,64 +350,68 @@ export default function AdminFacturesPage() {
   // Vue liste des clients
   if (view === 'clients') {
     return (
-      <div className="space-y-6">
-        <div className="flex justify-between items-center">
+      <div className="space-y-4 sm:space-y-6">
+        <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:justify-between sm:items-center">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Gestion des Factures</h1>
-            <p className="text-slate-600 mt-1">Sélectionnez un client pour gérer ses factures</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Gestion des Factures</h1>
+            <p className="text-sm sm:text-base text-slate-600 mt-1">Sélectionnez un client pour gérer ses factures</p>
           </div>
         </div>
 
         <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center text-lg font-semibold text-slate-800">
-              <Users className="w-5 h-5 mr-2" /> Liste des Clients
+          <CardHeader className="p-4 sm:p-6">
+            <CardTitle className="flex items-center text-base sm:text-lg font-semibold text-slate-800">
+              <Users className="w-4 h-4 sm:w-5 sm:h-5 mr-2" /> Liste des Clients
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="mb-6 relative">
+          <CardContent className="p-4 sm:p-6">
+            <div className="mb-4 sm:mb-6 relative">
               <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
               <Input
-                placeholder="Rechercher par nom, société ou email..."
+                placeholder="Rechercher..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className="pl-10 text-sm sm:text-base"
               />
             </div>
 
             {isLoading.clients ? (
-              <div className="space-y-4">{[...Array(3)].map((_, i) => (<div key={i} className="h-20 bg-slate-100 rounded animate-pulse"></div>))}</div>
+              <div className="space-y-3 sm:space-y-4">{[...Array(3)].map((_, i) => (<div key={i} className="h-16 sm:h-20 bg-slate-100 rounded animate-pulse"></div>))}</div>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {filteredClients.length === 0 ? (
-                  <div className="text-center py-8 text-slate-500">
+                  <div className="text-center py-6 sm:py-8 text-slate-500 text-sm sm:text-base">
                     {searchTerm ? 'Aucun client trouvé' : 'Aucun client disponible'}
                   </div>
                 ) : (
                   filteredClients.map((client) => (
                     <div
                       key={client.uid}
-                      className="border border-slate-200 rounded-lg p-4 hover:bg-slate-50 cursor-pointer transition-colors"
+                      className="border border-slate-200 rounded-lg p-3 sm:p-4 hover:bg-slate-50 cursor-pointer transition-colors"
                       onClick={() => handleClientSelect(client)}
                     >
-                      <div className="flex justify-between items-start">
+                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start space-y-3 sm:space-y-0">
                         <div className="flex-1">
-                          <div className="flex items-center space-x-3">
-                            <h3 className="text-lg font-semibold text-slate-900">{client.nom}</h3>
+                          <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
+                            <h3 className="text-base sm:text-lg font-semibold text-slate-900">{client.nom}</h3>
                             <StatusBadge statut={client.statut} />
                           </div>
-                          <p className="text-slate-600 mt-1">{client.societe}</p>
-                          {client.email && (<p className="text-sm text-slate-500 mt-1">{client.email}</p>)}
+                          <p className="text-sm sm:text-base text-slate-600 mt-1">{client.societe}</p>
+                          {client.email && (<p className="text-xs sm:text-sm text-slate-500 mt-1 break-all">{client.email}</p>)}
                           <p className="text-xs text-slate-400 mt-2">Inscrit le: {formatDate(client.date_inscription)}</p>
                         </div>
-                        <Button variant="outline" size="sm"><Eye className="w-4 h-4 mr-2" /> Voir les factures</Button>
+                        <Button variant="outline" size="sm" className="w-full sm:w-auto text-xs sm:text-sm">
+                          <Eye className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" /> 
+                          <span className="hidden sm:inline">Voir les factures</span>
+                          <span className="sm:hidden">Voir</span>
+                        </Button>
                       </div>
                     </div>
                   ))
                 )}
               </div>
             )}
-            <div className="mt-4 text-sm text-gray-600">Total: {filteredClients.length} client(s)</div>
+            <div className="mt-3 sm:mt-4 text-xs sm:text-sm text-gray-600">Total: {filteredClients.length} client(s)</div>
           </CardContent>
         </Card>
       </div>
@@ -417,23 +421,47 @@ export default function AdminFacturesPage() {
   // Vue factures du client sélectionné
   if (view === 'client' && selectedClient) {
     return (
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Button variant="outline" onClick={handleBackToClients} className="flex items-center">
-              <ArrowLeft className="w-4 h-4 mr-2" /> Retour aux clients
+      <div className="space-y-4 sm:space-y-6">
+        {/* Header avec bouton retour et titre */}
+        <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
+            <Button 
+              variant="outline" 
+              onClick={handleBackToClients} 
+              className="flex items-center w-full sm:w-auto text-sm"
+              size="sm"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" /> Retour
             </Button>
             <div>
-              <h1 className="text-3xl font-bold text-slate-900">Factures de {selectedClient.nom}</h1>
-              <p className="text-slate-600 mt-1">{selectedClient.societe}</p>
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900">
+                Factures de {selectedClient.nom}
+              </h1>
+              <p className="text-sm sm:text-base text-slate-600 mt-1">{selectedClient.societe}</p>
             </div>
           </div>
-          <div className="flex space-x-2">
-            <Button onClick={generateAllEcritures} variant="outline" className="flex items-center space-x-1" disabled={isLoading.factures}>
-              <Brain className="w-4 h-4" /> <span>Générer toutes les écritures</span>
+          
+          {/* Boutons d'action - Stack sur mobile */}
+          <div className="flex flex-col sm:flex-row gap-2 sm:space-x-2">
+            <Button 
+              onClick={generateAllEcritures} 
+              variant="outline" 
+              className="flex items-center justify-center space-x-1 text-xs sm:text-sm w-full sm:w-auto" 
+              disabled={isLoading.factures}
+              size="sm"
+            >
+              <Brain className="w-4 h-4" /> 
+              <span className="hidden sm:inline">Générer toutes les écritures</span>
+              <span className="sm:hidden">Générer tout</span>
             </Button>
-            <Button onClick={() => setModals(p => ({ ...p, scan: true }))} className="bg-violet-600 hover:bg-violet-700 text-white">
-              <Scan className="w-4 h-4 mr-2" /> Scanner une facture
+            <Button 
+              onClick={() => setModals(p => ({ ...p, scan: true }))} 
+              className="bg-violet-600 hover:bg-violet-700 text-white text-xs sm:text-sm w-full sm:w-auto"
+              size="sm"
+            >
+              <Scan className="w-4 h-4 mr-2" /> 
+              <span className="hidden sm:inline">Scanner une facture</span>
+              <span className="sm:hidden">Scanner</span>
             </Button>
           </div>
         </div>
@@ -457,12 +485,12 @@ export default function AdminFacturesPage() {
         />
 
         <Card>
-          <CardHeader>
-            <CardTitle className="text-lg font-semibold text-slate-800">
+          <CardHeader className="p-4 sm:p-6">
+            <CardTitle className="text-base sm:text-lg font-semibold text-slate-800">
               Documents de {selectedClient.nom} ({currentJournalData.length})
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-0 sm:p-6">
             <UnifiedJournalTable
               journauxAchat={filteredJournals.Achat as Facture[]}
               journauxVente={filteredJournals.Vente as JournalVente[]}
