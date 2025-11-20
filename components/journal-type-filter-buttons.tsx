@@ -30,7 +30,7 @@ export function JournalTypeFilterButtons({ factures, selectedType, onTypeSelect 
   };
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-6">
       {JOURNAL_TYPES.map((type) => {
         const count = getCountByType(type.value);
         const isSelected = selectedType === type.value;
@@ -41,18 +41,19 @@ export function JournalTypeFilterButtons({ factures, selectedType, onTypeSelect 
             variant={isSelected ? "default" : "outline"}
             size="sm"
             onClick={() => onTypeSelect(type.value)}
-            className={`flex items-center gap-2 ${isSelected
+            className={`flex items-center gap-1 sm:gap-2 text-xs sm:text-sm px-2 sm:px-3 py-1.5 sm:py-2 ${isSelected
               ? 'bg-violet-600 hover:bg-violet-700 text-white'
               : 'hover:bg-gray-50'
               }`}
           >
-            <span>{type.label}</span>
+            <span className="hidden sm:inline">{type.label}</span>
+            <span className="sm:hidden">{type.label.replace('Journal d\'', '').replace('Journal de ', '')}</span>
             <Badge
               variant="secondary"
               className={`${isSelected
                 ? 'bg-white/20 text-white'
                 : type.color
-                } text-xs`}
+                } text-xs px-1.5 py-0.5`}
             >
               {count}
             </Badge>
