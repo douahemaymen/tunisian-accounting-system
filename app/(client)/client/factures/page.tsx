@@ -187,32 +187,34 @@ export default function ClientFacturesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-3 sm:p-4 md:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6 lg:mb-8">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">Tableau de bord</h1>
-            <p className="text-sm sm:text-base text-gray-600">Gérez vos documents comptables</p>
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-1">Tableau de bord</h1>
+            <p className="text-xs sm:text-sm lg:text-base text-gray-600">Gérez vos documents comptables</p>
           </div>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="flex items-center gap-2 px-4 sm:px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 font-medium w-full sm:w-auto justify-center"
+            className="flex items-center gap-2 px-4 sm:px-5 lg:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 font-medium w-full sm:w-auto justify-center text-sm sm:text-base"
           >
             <Icon name="plus" className="w-4 h-4 sm:w-5 sm:h-5" />
-            <span className="text-sm sm:text-base">Nouveau document</span>
+            <span className="hidden sm:inline">Nouveau document</span>
+            <span className="sm:hidden">Scanner</span>
           </button>
         </div>
 
         {/* Tableau des Factures (Tabs + Table) */}
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-6">
-          <div className="border-b border-gray-200">
-            <nav className="flex" aria-label="Tabs">
+        <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg overflow-hidden mb-4 sm:mb-6">
+          {/* Tabs - Scrollable sur mobile */}
+          <div className="border-b border-gray-200 overflow-x-auto">
+            <nav className="flex min-w-max sm:min-w-0" aria-label="Tabs">
               {TABS.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex-1 py-4 px-6 text-center font-medium transition-all ${
+                  className={`flex-1 py-3 sm:py-4 px-3 sm:px-6 text-center font-medium transition-all text-xs sm:text-sm lg:text-base whitespace-nowrap ${
                     activeTab === tab.id
                       ? 'text-blue-600 border-b-2 border-blue-600 bg-blue-50'
                       : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
@@ -225,36 +227,38 @@ export default function ClientFacturesPage() {
           </div>
 
           {/* Actions */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 bg-gray-50 border-b">
-            <div className="flex items-center gap-3">
-              <span className="text-sm font-medium text-gray-700">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 border-b">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <span className="text-xs sm:text-sm font-medium text-gray-700">
                 Total: {filteredFactures.filter(f => f.type_journal === activeTab).length} facture(s)
               </span>
             </div>
             <button
               onClick={handleExport}
-              className="px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-black transition-colors text-sm font-medium shadow-md"
+              className="px-3 sm:px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-black transition-colors text-xs sm:text-sm font-medium shadow-md w-full sm:w-auto"
             >
               📊 Exporter CSV
             </button>
           </div>
 
-          {/* Table du Journal Actif */}
-          <JournalTable
-            data={(() => {
-              const data = filteredFactures.filter(f => f.type_journal === activeTab);
-              console.log('📋 Données pour le tableau:', {
-                activeTab,
-                filteredCount: filteredFactures.length,
-                matchingCount: data.length,
-                data: data.map(f => ({ id: f.id, type_journal: f.type_journal }))
-              });
-              return data;
-            })()}
-            type={activeTab}
-            onEdit={() => {}} 
-            onDelete={handleDeleteFacture} 
-          />
+          {/* Table du Journal Actif - Wrapper avec scroll horizontal sur mobile */}
+          <div className="overflow-x-auto">
+            <JournalTable
+              data={(() => {
+                const data = filteredFactures.filter(f => f.type_journal === activeTab);
+                console.log('📋 Données pour le tableau:', {
+                  activeTab,
+                  filteredCount: filteredFactures.length,
+                  matchingCount: data.length,
+                  data: data.map(f => ({ id: f.id, type_journal: f.type_journal }))
+                });
+                return data;
+              })()}
+              type={activeTab}
+              onEdit={() => {}} 
+              onDelete={handleDeleteFacture} 
+            />
+          </div>
         </div>
       </div>
 
